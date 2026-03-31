@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "gemini-runner": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\VerNe\\Downloads\\Documents\\cc-connect\\cc-connect\\tools\\gemini-runner\\mcp_server.py"
+      ],
+      "description": "Isolated Gemini CLI runner for audits with no context pollution"
+    }
+  }
+}
