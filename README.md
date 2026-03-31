@@ -1,5 +1,7 @@
 # gemini-runner-mcp-skill-kit
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 [English README](./README.en.md)
 
 面向自动化与 Agent 工作流的 **Gemini CLI 隔离执行套件**（机器优先输出、MCP 可调用、Skill 可复用）。

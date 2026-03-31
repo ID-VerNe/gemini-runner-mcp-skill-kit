@@ -1,5 +1,7 @@
 # gemini-runner-mcp-skill-kit
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 [中文 README](./README.md)
 
 Machine-first isolated Gemini CLI runner for automation, MCP tools, and agent workflows.
