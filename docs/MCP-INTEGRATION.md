@@ -25,7 +25,7 @@ For an isolated audit runner consumed by other agents, MCP is the correct choice
 Run the setup script to automatically configure both Claude Desktop and Copilot CLI:
 
 ```bash
-python tools/gemini-runner/setup_mcp.py
+python setup_mcp.py
 ```
 
 This will add the `gemini-runner` MCP server to:
@@ -51,7 +51,7 @@ Then restart the respective application.
     "gemini-runner": {
       "command": "python",
       "args": [
-        "C:\\absolute\\path\\to\\cc-connect\\tools\\gemini-runner\\mcp_server.py"
+        "C:\\absolute\\path\\to\\gemini-runner-mcp-skill-kit\\mcp_server.py"
       ]
     }
   }
@@ -70,7 +70,7 @@ Then restart the respective application.
     "gemini-runner": {
       "command": "python",
       "args": [
-        "C:\\absolute\\path\\to\\cc-connect\\tools\\gemini-runner\\mcp_server.py"
+        "C:\\absolute\\path\\to\\gemini-runner-mcp-skill-kit\\mcp_server.py"
       ],
       "description": "Isolated Gemini CLI runner for audits with no context pollution"
     }

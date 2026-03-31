@@ -1,4 +1,4 @@
-# gemini-runner
+# gemini-runner-mcp-skill-kit
 
 Machine-first isolated Gemini CLI runner for automation, MCP tools, and agent workflows.
 
@@ -21,13 +21,13 @@ Wrappers should parse this line and read `result.json`.
 From repository root:
 
 ```bash
-python tools\gemini-runner\gemini_runner.py run-audit --task "Audit this repository"
+python gemini_runner.py run-audit --task "Audit this repository"
 ```
 
 Common options:
 
 ```bash
-python tools\gemini-runner\gemini_runner.py run-audit ^
+python gemini_runner.py run-audit ^
   --task "Find auth bugs" ^
   --cwd "C:\path\to\repo" ^
   --mode default ^
@@ -37,7 +37,7 @@ python tools\gemini-runner\gemini_runner.py run-audit ^
 Resume a previous Gemini session:
 
 ```bash
-python tools\gemini-runner\gemini_runner.py run-audit ^
+python gemini_runner.py run-audit ^
   --task "Continue previous analysis and summarize fixes" ^
   --resume-session "<session_id>"
 ```
@@ -52,7 +52,7 @@ python tools\gemini-runner\gemini_runner.py run-audit ^
 ## Human mode (debug only)
 
 ```bash
-python tools\gemini-runner\gemini_runner.py run-audit --task "..." --human-stream --human-render compact
+python gemini_runner.py run-audit --task "..." --human-stream --human-render compact
 ```
 
 Use this only for manual debugging, not automation.
@@ -73,13 +73,17 @@ Use `mcp_server.py` as stdio MCP server.
 
 Tool exposed: `gemini_audit`
 
-See full setup in `MCP-INTEGRATION.md`.
+See full setup in `docs/MCP-INTEGRATION.md`.
 
 Automatic setup for Copilot CLI + Claude Desktop:
 
 ```bash
-python tools\gemini-runner\setup_mcp.py
+python setup_mcp.py
 ```
+
+Sample config is in `config/mcp-config.example.json`.
+
+Skill files are in `skills/SKILL.md` and `docs/SKILL-USAGE.md`.
 
 ## Validation status
 
@@ -93,7 +97,6 @@ Current automated tests cover:
 Run all tests:
 
 ```bash
-cd tools\gemini-runner
 python -m unittest discover -s tests -v
 ```
 

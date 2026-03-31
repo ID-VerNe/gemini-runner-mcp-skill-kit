@@ -1,6 +1,6 @@
 # Skill Version Guide (for Agents)
 
-This folder includes a skill-style prompt file: `SKILL.md`.
+This project includes a skill-style prompt file: `skills/SKILL.md`.
 
 Use it when your agent framework supports local skills (for example, scanning a `SKILL.md` and following its instructions to call tools).
 
@@ -22,7 +22,7 @@ The MCP server must already be configured:
 
 and point to:
 
-`tools\gemini-runner\mcp_server.py`
+`mcp_server.py`
 
 ## Suggested invocation pattern
 
