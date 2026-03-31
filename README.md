@@ -1,100 +1,102 @@
 # gemini-runner-mcp-skill-kit
 
-Machine-first isolated Gemini CLI runner for automation, MCP tools, and agent workflows.
+[English README](./README.en.md)
 
-## What this solves
+面向自动化与 Agent 工作流的 **Gemini CLI 隔离执行套件**（机器优先输出、MCP 可调用、Skill 可复用）。
 
-When an agent directly runs Gemini CLI, raw stream output can pollute the parent session context.
+## 这个项目解决什么问题
 
-`gemini_runner.py` runs Gemini in an isolated subprocess, writes full artifacts to disk, and prints a single machine-readable line to stdout.
+当 Agent 直接运行 Gemini CLI 时，流式输出会污染主会话上下文。
 
-## Output contract (machine mode, default)
+`gemini_runner.py` 通过隔离子进程执行 Gemini，把完整日志写入 artifacts，并在 stdout 只输出一行机器可解析协议，方便上层工具稳定集成。
+
+## 机器模式输出协议（默认）
 
 ```text
 RESULT_JSON=C:\absolute\path\to\.gemini-runs\<run_id>\result.json
 ```
 
-Wrappers should parse this line and read `result.json`.
+上层包装器应解析这行路径，再读取 `result.json`。
 
-## Quick start
+## 快速开始
 
-From repository root:
+在仓库根目录执行：
 
 ```bash
-python gemini_runner.py run-audit --task "Audit this repository"
+python gemini_runner.py run-audit --task "请审计当前仓库"
 ```
 
-Common options:
+常用参数示例：
 
 ```bash
 python gemini_runner.py run-audit ^
-  --task "Find auth bugs" ^
+  --task "检查认证逻辑风险" ^
   --cwd "C:\path\to\repo" ^
   --mode default ^
   --timeout-seconds 120
 ```
 
-Resume a previous Gemini session:
+续接会话：
 
 ```bash
 python gemini_runner.py run-audit ^
-  --task "Continue previous analysis and summarize fixes" ^
+  --task "基于上一轮继续分析并给修复建议" ^
   --resume-session "<session_id>"
 ```
 
-## Modes
+## 运行模式
 
-- `default`: normal approval behavior
-- `auto_edit`: maps to `--approval-mode auto_edit`
-- `yolo`: maps to `-y`
-- `plan`: maps to `--approval-mode plan`
+- `default`: 默认审批行为
+- `auto_edit`: 映射为 `--approval-mode auto_edit`
+- `yolo`: 映射为 `-y`
+- `plan`: 映射为 `--approval-mode plan`
 
-## Human mode (debug only)
+## 人类可读模式（仅调试）
 
 ```bash
 python gemini_runner.py run-audit --task "..." --human-stream --human-render compact
 ```
 
-Use this only for manual debugging, not automation.
+仅用于手工排查，自动化场景请坚持机器模式。
 
-## Artifacts
+## 产物目录
 
-Each run creates `.gemini-runs/<run_id>/`:
+每次运行会生成 `.gemini-runs/<run_id>/`：
 
-- `result.json`: structured final result
-- `events.jsonl`: raw parsed stream-json events
-- `stdout.txt`: aggregated assistant text
-- `stderr.txt`: Gemini stderr
-- `meta.json`: run metadata (args, cwd, return code, etc.)
+- `result.json`: 结构化最终结果（主读取目标）
+- `events.jsonl`: 原始事件流
+- `stdout.txt`: 聚合文本输出
+- `stderr.txt`: Gemini CLI 错误输出
+- `meta.json`: 运行元数据（args、cwd、return code 等）
 
-## MCP integration
+## MCP 集成
 
-Use `mcp_server.py` as stdio MCP server.
+使用 `mcp_server.py` 作为 stdio MCP server，暴露工具：
 
-Tool exposed: `gemini_audit`
+- `gemini_audit`
 
-See full setup in `docs/MCP-INTEGRATION.md`.
+完整接入步骤见：
 
-Automatic setup for Copilot CLI + Claude Desktop:
+- `docs/MCP-INTEGRATION.md`
+
+自动配置（Copilot CLI + Claude Desktop）：
 
 ```bash
 python setup_mcp.py
 ```
 
-Sample config is in `config/mcp-config.example.json`.
+配置示例文件：
 
-Skill files are in `skills/SKILL.md` and `docs/SKILL-USAGE.md`.
+- `config/mcp-config.example.json`
 
-## Validation status
+Skill 文件位置：
 
-Current automated tests cover:
+- `skills/SKILL.md`
+- `docs/SKILL-USAGE.md`
 
-- argument building and parsing safety
-- spawn/timeout/error behavior
-- MCP tool input validation (task size, cwd validity, unknown tool)
-- setup script behavior (new config, invalid JSON backup, atomic write)
+## 测试与验证
 
-Run all tests:
+运行全量测试：
 
 ```bash
 python -m unittest discover -s tests -v
